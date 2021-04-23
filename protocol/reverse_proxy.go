@@ -5,10 +5,13 @@ package protocol
 // license that can be found in the LICENSE file.
 
 import (
+	"bytes"
 	"io"
+	"io/ioutil"
 	"net"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -48,6 +51,8 @@ type ReverseProxy struct {
 	// response body.
 	// If zero, no periodic flushing is done.
 	FlushInterval time.Duration
+
+	StubProxy StubPass
 }
 
 func singleJoiningSlash(a, b string) string {
@@ -195,13 +200,27 @@ func (p *ReverseProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	for _, middleware := range p.Middleware {
 		middleware.HandleEvent(muxy.EventPreDispatch, ctx)
 	}
-	res, err := transport.RoundTrip(outreq)
-	if err != nil {
-		log.Error("http: proxy error: %v", err)
-		rw.WriteHeader(http.StatusInternalServerError)
-		return
+
+	res := &http.Response{}
+
+	if p.StubProxy.Stub == true {
+		res = &http.Response{
+			Status:           strconv.Itoa(p.StubProxy.StubStatus),
+			StatusCode:       p.StubProxy.StubStatus,
+			Body:             ioutil.NopCloser(bytes.NewReader([]byte(p.StubProxy.StubBody))),
+			Header: 		  http.Header{},
+		}
+		defer res.Body.Close()
+	} else {
+		var err error
+		res, err = transport.RoundTrip(outreq)
+		if err != nil {
+			log.Error("http: proxy error: %v", err)
+			rw.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		defer res.Body.Close()
 	}
-	defer res.Body.Close()
 
 	// Fire Post-dispatch middleware event
 	ctx = &muxy.Context{

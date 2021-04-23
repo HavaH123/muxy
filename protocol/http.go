@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"time"
 
 	"regexp"
@@ -29,6 +30,12 @@ type ProxyRequest struct {
 	Host   string
 }
 
+type StubPass struct {
+	StubBody    string 	`required:"false" mapstructure:"stub_body"`
+	StubStatus 	int		`required:"false" mapstructure:"stub_status"`
+	Stub 		bool	`required:"false" mapstructure:"stub"`
+}
+
 // ProxyPass contains details of the HTTP request to
 // send to the downstream proxy target
 type ProxyPass struct {
@@ -38,11 +45,7 @@ type ProxyPass struct {
 
 	// Scheme is one of http or https
 	Scheme string
-
-	// Body    string // TODO: Could use this to return back a stub
-	// TODO: Make this a templated body i.e. Accept ProxyRequest object and
-	// Muxy Context or something so that the body can be smart/intelligent
-	// Stub boolean // TODO: Use this to turn proxy rule into a stub instead.
+	StubProxy StubPass `required:"false" mapstructure:"stub_proxy"`
 }
 
 // ProxyRule contains the rules for proxying a target HTTP system
@@ -58,6 +61,7 @@ type HTTPProxy struct {
 	Protocol            string      `default:"http" required:"true"`
 	ProxyHost           string      `required:"true" mapstructure:"proxy_host"`
 	ProxyPort           int         `required:"true" mapstructure:"proxy_port"`
+	ReqHTTPProxy 		string 		`required:"false" mapstructure:"http_proxy"`
 	ProxyProtocol       string      `required:"true" default:"http" mapstructure:"proxy_protocol"`
 	Insecure            bool        `required:"true" default:"false" mapstructure:"insecure"`
 	ProxySslCertificate string      `required:"false" mapstructure:"proxy_ssl_cert"`
@@ -167,9 +171,9 @@ func (p *HTTPProxy) Proxy() {
 					p.ApplyProxyPassRule(rule, req)
 				}
 
-				proxy = &ReverseProxy{Director: director, Middleware: p.middleware}
+				proxy = &ReverseProxy{Director: director, Middleware: p.middleware, StubProxy: rule.Pass.StubProxy}
 				proxy.Transport = &http.Transport{
-					Proxy:               http.ProxyFromEnvironment,
+					Proxy:               getHTTPProxy(p),
 					TLSClientConfig:     config,
 					TLSHandshakeTimeout: 10 * time.Second,
 				}
@@ -241,4 +245,17 @@ func MatchRule(rule ProxyRule, req http.Request) bool {
 		}
 	}
 	return true
+}
+
+func getHTTPProxy(p *HTTPProxy) func(*http.Request) (*url.URL, error) {
+	if p.ReqHTTPProxy == "" {
+		return http.ProxyFromEnvironment
+	}
+
+	proxyUrl, err := url.Parse(p.ReqHTTPProxy)
+	if err != nil {
+		return http.ProxyFromEnvironment
+	}
+
+	return http.ProxyURL(proxyUrl)
 }
