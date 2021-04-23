@@ -112,7 +112,7 @@ func (p *HTTPProxy) Teardown() {
 
 // Proxy performs the proxy event
 func (p *HTTPProxy) Proxy() {
-	log.Info("HTTP proxy listening on %s", log.Colorize(log.BLUE, fmt.Sprintf("%s://%s:%d", p.Protocol, p.Host, p.Port)))
+	log.Info("[Updated] HTTP proxy listening on %s", log.Colorize(log.BLUE, fmt.Sprintf("%s://%s:%d", p.Protocol, p.Host, p.Port)))
 
 	// TODO: Suggest we only try to configure SSL infra iff:
 	//        a) https is requested; and
