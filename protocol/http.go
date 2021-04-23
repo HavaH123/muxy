@@ -248,12 +248,15 @@ func MatchRule(rule ProxyRule, req http.Request) bool {
 }
 
 func getHTTPProxy(p *HTTPProxy) func(*http.Request) (*url.URL, error) {
+	log.Debug("Getting HTTP Proxy to use")
 	if p.ReqHTTPProxy == "" {
+		log.Debug("Empty http_proxy. Using ProxyFromEnvironment")
 		return http.ProxyFromEnvironment
 	}
 
 	proxyUrl, err := url.Parse(p.ReqHTTPProxy)
 	if err != nil {
+		log.Debug("Getting Error: %s. Using ProxyFromEnvironment", err)
 		return http.ProxyFromEnvironment
 	}
 
