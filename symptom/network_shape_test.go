@@ -6,8 +6,8 @@ import (
 
 	"strings"
 
-	"github.com/mefellows/muxy/muxy"
-	"github.com/mefellows/muxy/symptom/throttler"
+	"github.com/havah123/muxy/muxy"
+	"github.com/havah123/muxy/symptom/throttler"
 )
 
 func TestNetworkShapeSymptom_Setup(t *testing.T) {

@@ -3,7 +3,7 @@ package symptom
 import (
 	"testing"
 
-	"github.com/mefellows/muxy/muxy"
+	"github.com/havah123/muxy/muxy"
 )
 
 func simpleDelay() HTTPDelaySymptom {

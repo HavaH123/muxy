@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/mefellows/muxy/muxy"
+	"github.com/havah123/muxy/muxy"
 )
 
 var proxiedServerBody = "proxied server up!"

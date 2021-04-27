@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/mefellows/muxy/muxy"
+	"github.com/havah123/muxy/muxy"
 )
 
 func TestLogger_Setup(t *testing.T) {

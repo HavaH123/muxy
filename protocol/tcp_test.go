@@ -11,8 +11,8 @@ import (
 
 	"net"
 
-	"github.com/mefellows/muxy/muxy"
-	"github.com/mefellows/muxy/symptom"
+	"github.com/havah123/muxy/muxy"
+	"github.com/havah123/muxy/symptom"
 )
 
 func setupLocalTCP(port int) {

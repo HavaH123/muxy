@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mefellows/muxy/command"
-	_ "github.com/mefellows/muxy/middleware"
-	_ "github.com/mefellows/muxy/protocol"
-	_ "github.com/mefellows/muxy/symptom"
+	"github.com/havah123/muxy/command"
+	_ "github.com/havah123/muxy/middleware"
+	_ "github.com/havah123/muxy/protocol"
+	_ "github.com/havah123/muxy/symptom"
 	"github.com/mitchellh/cli"
 )
 

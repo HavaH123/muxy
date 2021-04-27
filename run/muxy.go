@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/mefellows/muxy/log"
-	"github.com/mefellows/muxy/muxy"
+	"github.com/havah123/muxy/log"
+	"github.com/havah123/muxy/muxy"
 	"github.com/mefellows/plugo/plugo"
 )
 

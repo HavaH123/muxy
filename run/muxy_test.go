@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	_ "github.com/mefellows/muxy/middleware"
-	_ "github.com/mefellows/muxy/protocol"
-	_ "github.com/mefellows/muxy/symptom"
+	_ "github.com/havah123/muxy/middleware"
+	_ "github.com/havah123/muxy/protocol"
+	_ "github.com/havah123/muxy/symptom"
 )
 
 var proxiedServerBody = "proxied server up!"

@@ -3,8 +3,8 @@
 Proxy for simulating real-world distributed system failures to improve resilience in your applications.
 
 [![wercker status](https://app.wercker.com/status/e45703ebafd48632db56f022cc54546b/s "wercker status")](https://app.wercker.com/project/bykey/e45703ebafd48632db56f022cc54546b)
-[![Go Report Card](https://goreportcard.com/badge/github.com/mefellows/muxy)](https://goreportcard.com/report/github.com/mefellows/muxy)
-[![GoDoc](https://godoc.org/github.com/mefellows/muxy?status.svg)](https://godoc.org/github.com/mefellows/muxy)
+[![Go Report Card](https://goreportcard.com/badge/github.com/havah123/muxy)](https://goreportcard.com/report/github.com/havah123/muxy)
+[![GoDoc](https://godoc.org/github.com/havah123/muxy?status.svg)](https://godoc.org/github.com/havah123/muxy)
 [![Coverage Status](https://coveralls.io/repos/github/mefellows/muxy/badge.svg?branch=HEAD)](https://coveralls.io/github/mefellows/muxy?branch=HEAD)
 
 ## Introduction
@@ -50,7 +50,7 @@ If you are building a distributed system, Muxy can help you test your resilience
 
 ## Installation
 
-Download a [release](https://github.com/mefellows/muxy/releases) for your platform
+Download a [release](https://github.com/havah123/muxy/releases) for your platform
 and put it somewhere on the `PATH`.
 
 ### On Mac OSX using Homebrew
@@ -64,7 +64,7 @@ brew install https://raw.githubusercontent.com/mefellows/muxy/master/scripts/mux
 ### Using Go Get
 
 ```
-go get github.com/mefellows/muxy
+go get github.com/havah123/muxy
 ```
 
 ## Using Muxy
@@ -169,7 +169,7 @@ proxy:
       # applies with lowest matching precedence.
       # Request matchers are specified as valid regular expressions
       # and must be properly YAML escaped.
-      # See https://github.com/mefellows/muxy/issues/11 for behaviour.
+      # See https://github.com/havah123/muxy/issues/11 for behaviour.
       - request:
           method: 'GET|DELETE'
           path: '^\/foo'
@@ -222,7 +222,7 @@ middleware:
       # requests on all http proxies.
       # Request matchers are specified as valid regular expressions
       # and must be properly YAML escaped.
-      # See https://github.com/mefellows/muxy/issues/11 for behaviour.
+      # See https://github.com/havah123/muxy/issues/11 for behaviour.
       matching_rules:
         - method: "GET|DELETE"
           path: "^/boo"
@@ -277,7 +277,7 @@ middleware:
       # requests on all http proxies.
       # Request matchers are specified as valid regular expressions
       # and must be properly YAML escaped.
-      # See https://github.com/mefellows/muxy/issues/11 for behaviour.
+      # See https://github.com/havah123/muxy/issues/11 for behaviour.
       matching_rules:
         - method: "GET|DELETE"
           path: "^/boo"
